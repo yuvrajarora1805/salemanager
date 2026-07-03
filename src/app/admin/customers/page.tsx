@@ -63,9 +63,11 @@ export default async function AdminCustomersPage({ searchParams }: { searchParam
 
   return (
     <div>
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
-        <h2 className="text-3xl font-bold text-gray-800">Manage Customers</h2>
-        <CustomerSearch initialQuery={currentSearch} />
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4 w-full">
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-800">Manage Customers</h2>
+        <div className="w-full sm:w-auto">
+          <CustomerSearch initialQuery={currentSearch} />
+        </div>
       </div>
 
       {/* Add New Customer Form */}
