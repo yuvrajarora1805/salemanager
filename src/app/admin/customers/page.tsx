@@ -99,9 +99,9 @@ export default async function AdminCustomersPage({ searchParams }: { searchParam
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Contact</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Address</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
@@ -113,14 +113,6 @@ export default async function AdminCustomersPage({ searchParams }: { searchParam
                   </Link>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{customer.contact}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{customer.address || "-"}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                    customer.status === 'APPROVED' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
-                  }`}>
-                    {customer.status}
-                  </span>
-                </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   {customer.status === 'PENDING' && (
                     <div className="flex gap-2">
@@ -139,6 +131,14 @@ export default async function AdminCustomersPage({ searchParams }: { searchParam
                        View History
                     </Link>
                   )}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{customer.address || "-"}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                    customer.status === 'APPROVED' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                  }`}>
+                    {customer.status}
+                  </span>
                 </td>
               </tr>
             ))}
