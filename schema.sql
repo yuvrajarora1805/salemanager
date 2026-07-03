@@ -39,3 +39,6 @@ CREATE TABLE IF NOT EXISTS sales (
 -- Insert default fuel rates if not exists
 INSERT IGNORE INTO fuel_rates (fuel_type, price_per_liter) VALUES ('PETROL', 0.00);
 INSERT IGNORE INTO fuel_rates (fuel_type, price_per_liter) VALUES ('DIESEL', 0.00);
+
+-- Insert default admin user if not exists
+INSERT IGNORE INTO users (name, email, password_hash, role) VALUES ('Admin', 'babloogoyal@gmail.com', '$2b$10$fGqKTr18.2hXRbY8qycUhevmSxRCnLizDTq1Wgj9Zzg1ggdArF1G6', 'ADMIN');
