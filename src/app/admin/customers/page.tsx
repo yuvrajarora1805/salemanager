@@ -53,23 +53,23 @@ export default async function AdminCustomersPage() {
       {/* Add New Customer Form */}
       <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 mb-8">
         <h3 className="text-xl font-semibold mb-4 text-gray-700">Add Approved Customer</h3>
-        <form action={addCustomerDirectly} className="flex gap-4 items-end">
-          <div className="flex-1">
+        <form action={addCustomerDirectly} className="flex flex-col md:flex-row gap-4 md:items-end">
+          <div className="flex-1 w-full">
             <label className="block text-sm font-medium text-gray-700 mb-1">Customer Name</label>
             <input type="text" name="name" required className="w-full border border-gray-300 rounded px-3 py-2 text-black focus:ring-blue-500" placeholder="e.g. John Doe" />
           </div>
-          <div className="flex-1">
+          <div className="flex-1 w-full">
             <label className="block text-sm font-medium text-gray-700 mb-1">Contact Info</label>
             <input type="text" name="contact" required className="w-full border border-gray-300 rounded px-3 py-2 text-black focus:ring-blue-500" placeholder="e.g. 1234567890" />
           </div>
-          <button type="submit" className="bg-blue-600 text-white font-bold py-2 px-6 rounded hover:bg-blue-700 transition">
+          <button type="submit" className="w-full md:w-auto bg-blue-600 text-white font-bold py-2 px-6 rounded hover:bg-blue-700 transition">
             Add Customer
           </button>
         </form>
       </div>
 
       {/* Customer List Table */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
