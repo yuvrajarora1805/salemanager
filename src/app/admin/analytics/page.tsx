@@ -60,35 +60,37 @@ export default async function AdminAnalyticsPage({ searchParams }: { searchParam
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-8">
-        <h2 className="text-3xl font-bold text-gray-800">Analytics</h2>
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-800">Analytics</h2>
         
         {/* Filters */}
-        <form className="flex gap-4 items-center bg-white p-2 rounded shadow-sm border border-gray-200">
-          <div>
-            <select name="range" defaultValue={currentRange} className="border border-gray-300 rounded px-2 py-1 text-sm text-gray-700">
+        <form className="flex flex-col sm:flex-row gap-3 sm:items-center bg-white p-3 rounded shadow-sm border border-gray-200 w-full md:w-auto">
+          <div className="w-full sm:w-auto">
+            <select name="range" defaultValue={currentRange} className="w-full sm:w-auto border border-gray-300 rounded px-2 py-1.5 text-sm text-gray-700">
               <option value="all">All Time</option>
               <option value="today">Today</option>
               <option value="7days">Last 7 Days</option>
               <option value="30days">Last 30 Days</option>
             </select>
           </div>
-          <div>
-            <select name="fuel" defaultValue={currentFuel} className="border border-gray-300 rounded px-2 py-1 text-sm text-gray-700">
+          <div className="w-full sm:w-auto">
+            <select name="fuel" defaultValue={currentFuel} className="w-full sm:w-auto border border-gray-300 rounded px-2 py-1.5 text-sm text-gray-700">
               <option value="all">All Fuels</option>
               <option value="PETROL">Petrol</option>
               <option value="DIESEL">Diesel</option>
             </select>
           </div>
-          <button type="submit" className="bg-blue-600 text-white text-sm font-semibold py-1 px-3 rounded hover:bg-blue-700">
-            Apply Filters
-          </button>
-          
-          {(currentRange !== "all" || currentFuel !== "all") && (
-            <Link href="/admin/analytics" className="text-sm text-red-500 hover:underline">
-              Clear
-            </Link>
-          )}
+          <div className="flex items-center gap-3">
+            <button type="submit" className="flex-1 sm:flex-none bg-blue-600 text-white text-sm font-semibold py-1.5 px-4 rounded hover:bg-blue-700">
+              Apply Filters
+            </button>
+            
+            {(currentRange !== "all" || currentFuel !== "all") && (
+              <Link href="/admin/analytics" className="text-sm text-red-500 hover:underline">
+                Clear
+              </Link>
+            )}
+          </div>
         </form>
       </div>
 
