@@ -87,7 +87,9 @@ export default async function CustomerHistoryPage({
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
         <div>
           <h2 className="text-2xl md:text-3xl font-bold text-gray-800">{customer.name}</h2>
-          <p className="text-gray-500">Contact: {customer.contact} | Status: {customer.status}</p>
+          <p className="text-gray-500">
+            Contact: {customer.contact} | Address: {customer.address || "N/A"} | Status: {customer.status}
+          </p>
         </div>
         <AnalyticsFilters 
           currentRange={currentRange} 

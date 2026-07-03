@@ -13,8 +13,8 @@ async function getCustomers(searchQuery?: string) {
   const params = [];
 
   if (searchQuery) {
-    query += ` WHERE c.name LIKE ? OR c.contact LIKE ?`;
-    params.push(`%${searchQuery}%`, `%${searchQuery}%`);
+    query += ` WHERE c.name LIKE ? OR c.contact LIKE ? OR c.address LIKE ?`;
+    params.push(`%${searchQuery}%`, `%${searchQuery}%`, `%${searchQuery}%`);
   }
 
   query += ` ORDER BY c.created_at DESC`;
@@ -45,10 +45,12 @@ async function addCustomerDirectly(formData: FormData) {
   "use server";
   const name = formData.get("name");
   const contact = formData.get("contact");
+  const address = formData.get("address") || "";
+  
   if (name && contact) {
     await pool.query(
-      "INSERT INTO customers (name, contact, status) VALUES (?, ?, 'APPROVED')",
-      [name, contact]
+      "INSERT INTO customers (name, contact, address, status) VALUES (?, ?, ?, 'APPROVED')",
+      [name, contact, address]
     );
     revalidatePath("/admin/customers");
   }
@@ -78,6 +80,10 @@ export default async function AdminCustomersPage({ searchParams }: { searchParam
             <label className="block text-sm font-medium text-gray-700 mb-1">Contact Info</label>
             <input type="text" name="contact" required className="w-full border border-gray-300 rounded px-3 py-2 text-black focus:ring-blue-500" placeholder="e.g. 1234567890" />
           </div>
+          <div className="flex-1 w-full">
+            <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+            <input type="text" name="address" className="w-full border border-gray-300 rounded px-3 py-2 text-black focus:ring-blue-500" placeholder="e.g. 123 Main St" />
+          </div>
           <button type="submit" className="w-full md:w-auto bg-blue-600 text-white font-bold py-2 px-6 rounded hover:bg-blue-700 transition">
             Add Customer
           </button>
@@ -91,6 +97,7 @@ export default async function AdminCustomersPage({ searchParams }: { searchParam
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Contact</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Address</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Added By</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
@@ -105,6 +112,7 @@ export default async function AdminCustomersPage({ searchParams }: { searchParam
                   </Link>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{customer.contact}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{customer.address || "-"}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{customer.added_by_name || "Admin"}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
@@ -136,7 +144,7 @@ export default async function AdminCustomersPage({ searchParams }: { searchParam
             ))}
             {customers.length === 0 && (
               <tr>
-                <td colSpan={5} className="px-6 py-8 text-center text-gray-500">
+                <td colSpan={6} className="px-6 py-8 text-center text-gray-500">
                   {currentSearch ? "No customers found matching your search." : "No customers found."}
                 </td>
               </tr>

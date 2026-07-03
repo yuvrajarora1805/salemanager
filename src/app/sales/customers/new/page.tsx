@@ -13,11 +13,12 @@ async function requestCustomer(formData: FormData) {
 
   const name = formData.get("name");
   const contact = formData.get("contact");
+  const address = formData.get("address") || "";
 
   if (name && contact) {
     await pool.query(
-      "INSERT INTO customers (name, contact, status, added_by) VALUES (?, ?, 'PENDING', ?)",
-      [name, contact, Number(session.user.id)]
+      "INSERT INTO customers (name, contact, address, status, added_by) VALUES (?, ?, ?, 'PENDING', ?)",
+      [name, contact, address, Number(session.user.id)]
     );
     revalidatePath("/sales/customers/new");
   }
@@ -68,6 +69,15 @@ export default async function NewCustomerRequestPage() {
                 required 
                 className="w-full border border-gray-300 rounded px-3 py-2 text-black focus:ring-blue-500" 
                 placeholder="e.g. 9876543210" 
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+              <input 
+                type="text" 
+                name="address" 
+                className="w-full border border-gray-300 rounded px-3 py-2 text-black focus:ring-blue-500" 
+                placeholder="e.g. 123 Main St" 
               />
             </div>
             <button type="submit" className="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded hover:bg-blue-700 transition mt-4">
