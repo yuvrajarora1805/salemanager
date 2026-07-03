@@ -1,10 +1,12 @@
 import pool from "@/lib/db";
 import { RowDataPacket } from "mysql2";
-import Link from "next/link";
+import AnalyticsFilters from "@/components/AnalyticsFilters";
 
 type SearchParams = {
   range?: string;
   fuel?: string;
+  startDate?: string;
+  endDate?: string;
 }
 
 async function getAnalytics(searchParams: SearchParams) {
@@ -19,6 +21,10 @@ async function getAnalytics(searchParams: SearchParams) {
     dateFilter = "AND s.created_at >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
   } else if (searchParams.range === "30days") {
     dateFilter = "AND s.created_at >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)";
+  } else if (searchParams.range === "custom" && searchParams.startDate && searchParams.endDate) {
+    dateFilter = "AND DATE(s.created_at) >= ? AND DATE(s.created_at) <= ?";
+    params.push(searchParams.startDate, searchParams.endDate);
+    p2.push(searchParams.startDate, searchParams.endDate);
   }
 
   if (searchParams.fuel && searchParams.fuel !== "all") {
@@ -28,7 +34,7 @@ async function getAnalytics(searchParams: SearchParams) {
   }
 
   const queryCustomers = `
-    SELECT c.name, SUM(s.quantity) as total_liters, SUM(s.total_price) as total_spent
+    SELECT c.name, SUM(s.quantity) as total_liters, SUM(s.total_price) as total_spent, c.id
     FROM sales s
     JOIN customers c ON s.customer_id = c.id
     WHERE 1=1 ${dateFilter} ${fuelFilter}
@@ -55,6 +61,8 @@ export default async function AdminAnalyticsPage({ searchParams }: { searchParam
   const resolvedParams = await searchParams;
   const currentRange = resolvedParams.range || "all";
   const currentFuel = resolvedParams.fuel || "all";
+  const currentStart = resolvedParams.startDate || "";
+  const currentEnd = resolvedParams.endDate || "";
 
   const { salesByCustomer, salesBySalesman } = await getAnalytics(resolvedParams);
 
@@ -62,36 +70,12 @@ export default async function AdminAnalyticsPage({ searchParams }: { searchParam
     <div>
       <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-800">Analytics</h2>
-        
-        {/* Filters */}
-        <form className="flex flex-col sm:flex-row gap-3 sm:items-center bg-white p-3 rounded shadow-sm border border-gray-200 w-full md:w-auto">
-          <div className="w-full sm:w-auto">
-            <select name="range" defaultValue={currentRange} className="w-full sm:w-auto border border-gray-300 rounded px-2 py-1.5 text-sm text-gray-700">
-              <option value="all">All Time</option>
-              <option value="today">Today</option>
-              <option value="7days">Last 7 Days</option>
-              <option value="30days">Last 30 Days</option>
-            </select>
-          </div>
-          <div className="w-full sm:w-auto">
-            <select name="fuel" defaultValue={currentFuel} className="w-full sm:w-auto border border-gray-300 rounded px-2 py-1.5 text-sm text-gray-700">
-              <option value="all">All Fuels</option>
-              <option value="PETROL">Petrol</option>
-              <option value="DIESEL">Diesel</option>
-            </select>
-          </div>
-          <div className="flex items-center gap-3">
-            <button type="submit" className="flex-1 sm:flex-none bg-blue-600 text-white text-sm font-semibold py-1.5 px-4 rounded hover:bg-blue-700">
-              Apply Filters
-            </button>
-            
-            {(currentRange !== "all" || currentFuel !== "all") && (
-              <Link href="/admin/analytics" className="text-sm text-red-500 hover:underline">
-                Clear
-              </Link>
-            )}
-          </div>
-        </form>
+        <AnalyticsFilters 
+          currentRange={currentRange} 
+          currentFuel={currentFuel} 
+          currentStart={currentStart} 
+          currentEnd={currentEnd} 
+        />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -111,7 +95,11 @@ export default async function AdminAnalyticsPage({ searchParams }: { searchParam
               <tbody className="divide-y divide-gray-200">
                 {salesByCustomer.map((item, idx) => (
                   <tr key={idx}>
-                    <td className="px-4 py-3 text-sm font-medium text-gray-900">{item.name}</td>
+                    <td className="px-4 py-3 text-sm font-medium text-gray-900">
+                      <a href={`/admin/customers/${item.id}`} className="text-blue-600 hover:underline">
+                        {item.name}
+                      </a>
+                    </td>
                     <td className="px-4 py-3 text-sm text-gray-500">{Number(item.total_liters).toFixed(2)} L</td>
                     <td className="px-4 py-3 text-sm text-gray-900 font-semibold">₹{Number(item.total_spent).toFixed(2)}</td>
                   </tr>
