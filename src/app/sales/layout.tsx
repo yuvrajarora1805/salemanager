@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import LogoutButton from "@/components/LogoutButton";
 
 export default async function SalesLayout({
   children,
@@ -28,7 +29,7 @@ export default async function SalesLayout({
             </div>
           </div>
           <div className="md:hidden">
-            <Link href="/api/auth/signout" className="text-sm bg-red-600 px-3 py-1 rounded">Logout</Link>
+            <LogoutButton className="text-sm bg-red-600 px-3 py-1 rounded">Logout</LogoutButton>
           </div>
         </div>
         <nav className="flex md:flex-col overflow-x-auto px-2 md:px-4 py-3 md:py-6 space-x-2 md:space-x-0 md:space-y-2 whitespace-nowrap">
@@ -40,9 +41,9 @@ export default async function SalesLayout({
           </Link>
         </nav>
         <div className="hidden md:block p-4 border-t border-blue-800 mt-auto">
-          <Link href="/api/auth/signout" className="block w-full text-center px-4 py-2 bg-red-600 rounded hover:bg-red-700 transition">
+          <LogoutButton className="block w-full text-center px-4 py-2 bg-red-600 rounded hover:bg-red-700 transition">
             Logout
-          </Link>
+          </LogoutButton>
         </div>
       </aside>
 
