@@ -27,62 +27,52 @@ export default async function RatesPage() {
 
   return (
     <div>
-      <h2 className="text-3xl font-bold text-gray-800 mb-8">Manage Fuel Rates</h2>
+      <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-8">Manage Fuel Rates</h2>
       
-      <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Fuel Type
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Price Per Liter (₹)
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Last Updated
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {rates.map((rate) => (
-              <tr key={rate.id}>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                    rate.fuel_type === 'PETROL' ? 'bg-orange-100 text-orange-800' : 'bg-blue-100 text-blue-800'
-                  }`}>
-                    {rate.fuel_type}
-                  </span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                  ₹{Number(rate.price_per_liter).toFixed(2)}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {new Date(rate.updated_at).toLocaleString()}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                  <form action={updateRate} className="flex items-center space-x-2">
-                    <input type="hidden" name="id" value={rate.id} />
-                    <input 
-                      type="number" 
-                      step="0.01" 
-                      name="price"
-                      defaultValue={rate.price_per_liter}
-                      className="border border-gray-300 rounded px-2 py-1 w-24 text-black focus:outline-none focus:ring-1 focus:ring-blue-500"
-                      required
-                    />
-                    <button type="submit" className="text-blue-600 hover:text-blue-900 bg-blue-50 px-3 py-1 rounded">
-                      Update
-                    </button>
-                  </form>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {rates.map((rate) => (
+          <div key={rate.id} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 relative overflow-hidden">
+            {/* Top color bar indicator */}
+            <div className={`absolute top-0 left-0 w-full h-1.5 ${rate.fuel_type === 'PETROL' ? 'bg-orange-500' : 'bg-blue-500'}`}></div>
+            
+            <div className="flex justify-between items-center mb-6 mt-2">
+              <h3 className={`text-xl font-bold ${rate.fuel_type === 'PETROL' ? 'text-orange-600' : 'text-blue-600'}`}>
+                {rate.fuel_type}
+              </h3>
+              <span className="text-xs font-medium text-gray-400 bg-gray-100 px-2 py-1 rounded-full">
+                Updated: {new Date(rate.updated_at).toLocaleDateString()}
+              </span>
+            </div>
+
+            <div className="mb-6">
+              <p className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-1">Current Price</p>
+              <p className="text-4xl font-black text-gray-800">
+                ₹{Number(rate.price_per_liter).toFixed(2)} <span className="text-lg text-gray-500 font-medium">/ Liter</span>
+              </p>
+            </div>
+
+            <form action={updateRate} className="bg-gray-50 -mx-6 -mb-6 p-6 border-t border-gray-100">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Update Price</label>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <input type="hidden" name="id" value={rate.id} />
+                <div className="relative flex-1">
+                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 font-medium">₹</span>
+                  <input 
+                    type="number" 
+                    step="0.01" 
+                    name="price"
+                    defaultValue={rate.price_per_liter}
+                    className="w-full border border-gray-300 rounded-lg pl-8 pr-4 py-2.5 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                  />
+                </div>
+                <button type="submit" className="w-full sm:w-auto bg-blue-600 text-white font-bold py-2.5 px-6 rounded-lg hover:bg-blue-700 transition">
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+        ))}
       </div>
     </div>
   );
