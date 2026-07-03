@@ -100,7 +100,6 @@ export default async function AdminCustomersPage({ searchParams }: { searchParam
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Contact</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Address</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Added By</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
             </tr>
@@ -115,7 +114,6 @@ export default async function AdminCustomersPage({ searchParams }: { searchParam
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{customer.contact}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{customer.address || "-"}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{customer.added_by_name || "Admin"}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
                     customer.status === 'APPROVED' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
@@ -146,7 +144,7 @@ export default async function AdminCustomersPage({ searchParams }: { searchParam
             ))}
             {customers.length === 0 && (
               <tr>
-                <td colSpan={6} className="px-6 py-8 text-center text-gray-500">
+                <td colSpan={5} className="px-6 py-8 text-center text-gray-500">
                   {currentSearch ? "No customers found matching your search." : "No customers found."}
                 </td>
               </tr>
