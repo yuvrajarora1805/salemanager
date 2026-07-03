@@ -29,7 +29,7 @@ export default async function RatesPage() {
     <div>
       <h2 className="text-3xl font-bold text-gray-800 mb-8">Manage Fuel Rates</h2>
       
-      <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>

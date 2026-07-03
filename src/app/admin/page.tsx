@@ -41,58 +41,67 @@ export default async function AdminDashboard() {
   };
 
   const formatLiters = (amount: number) => {
-    return new Intl.NumberFormat('en-IN').format(amount) + ' Liters';
+    return new Intl.NumberFormat('en-IN').format(amount) + ' L';
   };
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-8">
-        <h2 className="text-3xl font-bold text-gray-800">Dashboard Overview</h2>
+      <div className="flex flex-col md:flex-row justify-between md:items-center mb-8 gap-4">
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-800">Dashboard Overview</h2>
         {pendingCustomers > 0 && (
-          <span className="bg-red-100 text-red-800 text-sm font-semibold px-3 py-1 rounded-full">
+          <span className="bg-red-100 text-red-800 text-sm font-semibold px-3 py-1.5 rounded-full w-fit">
             {pendingCustomers} Pending Approvals
           </span>
         )}
       </div>
       
-      {/* MS (PETROL) Section */}
-      <h3 className="text-xl font-bold text-orange-600 mb-4 border-b pb-2">MS (Petrol) Sales</h3>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-          <p className="text-sm font-medium text-gray-500 uppercase">Today</p>
-          <p className="text-2xl font-bold text-gray-800 mt-2">{formatLiters(getStat('PETROL', 'today_qty'))}</p>
-          <p className="text-sm font-semibold text-green-600 mt-1">{formatCurrency(getStat('PETROL', 'today_rev'))}</p>
+      {/* Side by side columns for mobile and desktop */}
+      <div className="grid grid-cols-2 gap-4 md:gap-8">
+        
+        {/* MS (PETROL) Column */}
+        <div>
+          <h3 className="text-lg md:text-xl font-bold text-orange-600 mb-4 border-b border-orange-200 pb-2">MS (Petrol)</h3>
+          <div className="flex flex-col gap-4">
+            <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm border border-orange-100">
+              <p className="text-xs md:text-sm font-medium text-gray-500 uppercase">Today</p>
+              <p className="text-lg md:text-2xl font-bold text-gray-800 mt-1 md:mt-2">{formatLiters(getStat('PETROL', 'today_qty'))}</p>
+              <p className="text-xs md:text-sm font-semibold text-green-600 mt-1">{formatCurrency(getStat('PETROL', 'today_rev'))}</p>
+            </div>
+            <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm border border-gray-100">
+              <p className="text-xs md:text-sm font-medium text-gray-500 uppercase">This Week</p>
+              <p className="text-lg md:text-2xl font-bold text-gray-800 mt-1 md:mt-2">{formatLiters(getStat('PETROL', 'week_qty'))}</p>
+              <HiddenCurrency amount={formatCurrency(getStat('PETROL', 'week_rev'))} />
+            </div>
+            <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm border border-gray-100">
+              <p className="text-xs md:text-sm font-medium text-gray-500 uppercase">This Year</p>
+              <p className="text-lg md:text-2xl font-bold text-gray-800 mt-1 md:mt-2">{formatLiters(getStat('PETROL', 'year_qty'))}</p>
+              <HiddenCurrency amount={formatCurrency(getStat('PETROL', 'year_rev'))} />
+            </div>
+          </div>
         </div>
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-          <p className="text-sm font-medium text-gray-500 uppercase">This Week</p>
-          <p className="text-2xl font-bold text-gray-800 mt-2">{formatLiters(getStat('PETROL', 'week_qty'))}</p>
-          <HiddenCurrency amount={formatCurrency(getStat('PETROL', 'week_rev'))} />
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-          <p className="text-sm font-medium text-gray-500 uppercase">This Year</p>
-          <p className="text-2xl font-bold text-gray-800 mt-2">{formatLiters(getStat('PETROL', 'year_qty'))}</p>
-          <HiddenCurrency amount={formatCurrency(getStat('PETROL', 'year_rev'))} />
-        </div>
-      </div>
 
-      {/* HSD (DIESEL) Section */}
-      <h3 className="text-xl font-bold text-blue-600 mb-4 border-b pb-2">HSD (Diesel) Sales</h3>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-          <p className="text-sm font-medium text-gray-500 uppercase">Today</p>
-          <p className="text-2xl font-bold text-gray-800 mt-2">{formatLiters(getStat('DIESEL', 'today_qty'))}</p>
-          <p className="text-sm font-semibold text-green-600 mt-1">{formatCurrency(getStat('DIESEL', 'today_rev'))}</p>
+        {/* HSD (DIESEL) Column */}
+        <div>
+          <h3 className="text-lg md:text-xl font-bold text-blue-600 mb-4 border-b border-blue-200 pb-2">HSD (Diesel)</h3>
+          <div className="flex flex-col gap-4">
+            <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm border border-blue-100">
+              <p className="text-xs md:text-sm font-medium text-gray-500 uppercase">Today</p>
+              <p className="text-lg md:text-2xl font-bold text-gray-800 mt-1 md:mt-2">{formatLiters(getStat('DIESEL', 'today_qty'))}</p>
+              <p className="text-xs md:text-sm font-semibold text-green-600 mt-1">{formatCurrency(getStat('DIESEL', 'today_rev'))}</p>
+            </div>
+            <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm border border-gray-100">
+              <p className="text-xs md:text-sm font-medium text-gray-500 uppercase">This Week</p>
+              <p className="text-lg md:text-2xl font-bold text-gray-800 mt-1 md:mt-2">{formatLiters(getStat('DIESEL', 'week_qty'))}</p>
+              <HiddenCurrency amount={formatCurrency(getStat('DIESEL', 'week_rev'))} />
+            </div>
+            <div className="bg-white p-4 md:p-6 rounded-lg shadow-sm border border-gray-100">
+              <p className="text-xs md:text-sm font-medium text-gray-500 uppercase">This Year</p>
+              <p className="text-lg md:text-2xl font-bold text-gray-800 mt-1 md:mt-2">{formatLiters(getStat('DIESEL', 'year_qty'))}</p>
+              <HiddenCurrency amount={formatCurrency(getStat('DIESEL', 'year_rev'))} />
+            </div>
+          </div>
         </div>
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-          <p className="text-sm font-medium text-gray-500 uppercase">This Week</p>
-          <p className="text-2xl font-bold text-gray-800 mt-2">{formatLiters(getStat('DIESEL', 'week_qty'))}</p>
-          <HiddenCurrency amount={formatCurrency(getStat('DIESEL', 'week_rev'))} />
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-          <p className="text-sm font-medium text-gray-500 uppercase">This Year</p>
-          <p className="text-2xl font-bold text-gray-800 mt-2">{formatLiters(getStat('DIESEL', 'year_qty'))}</p>
-          <HiddenCurrency amount={formatCurrency(getStat('DIESEL', 'year_rev'))} />
-        </div>
+
       </div>
     </div>
   );
