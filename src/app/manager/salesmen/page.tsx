@@ -25,7 +25,7 @@ async function addSalesman(formData: FormData) {
     );
 
     if (existing.length > 0) {
-      redirect("/admin/salesmen?error=email_exists");
+      redirect("/manager/salesmen?error=email_exists");
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
@@ -35,8 +35,8 @@ async function addSalesman(formData: FormData) {
       [name, email, passwordHash]
     );
     
-    revalidatePath("/admin/salesmen");
-    redirect("/admin/salesmen");
+    revalidatePath("/manager/salesmen");
+    redirect("/manager/salesmen");
   }
 }
 
@@ -45,11 +45,11 @@ async function removeSalesman(formData: FormData) {
   const id = formData.get("id");
   if (id) {
     await pool.query("DELETE FROM users WHERE id = ? AND role = 'SALESMAN'", [Number(id)]);
-    revalidatePath("/admin/salesmen");
+    revalidatePath("/manager/salesmen");
   }
 }
 
-export default async function AdminSalesmenPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
+export default async function ManagerSalesmenPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
   const resolvedParams = await searchParams;
   const error = resolvedParams.error;
   const salesmen = await getSalesmen();
@@ -82,7 +82,7 @@ export default async function AdminSalesmenPage({ searchParams }: { searchParams
             <input type="password" name="password" required className="w-full border border-gray-300 rounded px-3 py-2 text-black focus:ring-blue-500" placeholder="Set password" minLength={6} />
           </div>
           <div className="md:col-span-3 flex justify-end mt-2">
-            <button type="submit" className="bg-blue-600 text-white font-bold py-2 px-6 rounded hover:bg-blue-700 transition">
+            <button type="submit" className="bg-indigo-600 text-white font-bold py-2 px-6 rounded hover:bg-indigo-700 transition">
               Create Salesman Account
             </button>
           </div>

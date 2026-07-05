@@ -10,9 +10,14 @@ export default withAuth(
       return NextResponse.redirect(new URL("/login", req.url));
     }
 
-    if (path.startsWith("/sales") && token?.role !== "SALESMAN") {
-      // Admins might also want access to sales, but let's restrict it strictly for now, or allow ADMIN
+    if (path.startsWith("/manager") && token?.role !== "MANAGER") {
       if (token?.role !== "ADMIN") {
+        return NextResponse.redirect(new URL("/login", req.url));
+      }
+    }
+
+    if (path.startsWith("/sales") && token?.role !== "SALESMAN") {
+      if (token?.role !== "ADMIN" && token?.role !== "MANAGER") {
         return NextResponse.redirect(new URL("/login", req.url));
       }
     }
@@ -25,5 +30,5 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/admin/:path*", "/sales/:path*"],
+  matcher: ["/admin/:path*", "/sales/:path*", "/manager/:path*"],
 };
