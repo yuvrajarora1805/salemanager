@@ -18,6 +18,21 @@ services:
       - db
     restart: always
 
+  website:
+    build:
+      context: ./website
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3000"
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=my-secret-pw
+      - DB_NAME=goyalfilling
+    depends_on:
+      - db
+    restart: always
+
   db:
     image: mysql:8.0
     ports:

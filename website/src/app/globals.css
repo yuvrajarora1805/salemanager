@@ -1,0 +1,514 @@
+@import "tailwindcss";
+
+/* ──────────────── Design Tokens ──────────────── */
+:root {
+  --navy: #0A2240;
+  --navy-light: #0F2D52;
+  --blue: #0099D8;
+  --blue-dark: #007AB0;
+  --blue-light: #33AADF;
+  --teal: #00B4A0;
+  --orange: #F47B20;
+  --bg-light: #F5F7FA;
+  --bg-white: #FFFFFF;
+  --text-primary: #1A1A2E;
+  --text-secondary: #555770;
+  --text-muted: #8E90A6;
+  --border-light: #E8EAF0;
+  --shadow-sm: 0 2px 8px rgba(10, 34, 64, 0.06);
+  --shadow-md: 0 8px 30px rgba(10, 34, 64, 0.1);
+  --shadow-lg: 0 20px 60px rgba(10, 34, 64, 0.15);
+  --shadow-xl: 0 30px 80px rgba(10, 34, 64, 0.2);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@theme inline {
+  --color-background: var(--bg-white);
+  --color-foreground: var(--text-primary);
+  --font-sans: var(--font-inter);
+}
+
+/* ──────────────── Base Reset ──────────────── */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--bg-white);
+  color: var(--text-primary);
+  font-family: var(--font-inter, 'Inter', system-ui, -apple-system, sans-serif);
+  overflow-x: hidden;
+  line-height: 1.7;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-light);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--blue);
+  border-radius: 100px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--navy);
+}
+
+/* ──────────────── Keyframe Animations ──────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes heroZoom {
+  from { transform: scale(1.05); }
+  to { transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 153, 216, 0.4); }
+  50% { box-shadow: 0 0 0 15px rgba(0, 153, 216, 0); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes counter-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ──────────────── Animation Utility Classes ──────────────── */
+.animate-fade-in { animation: fadeIn 0.6s ease-out both; }
+.animate-fade-in-up { animation: fadeInUp 0.7s ease-out both; }
+.animate-fade-in-down { animation: fadeInDown 0.6s ease-out both; }
+.animate-fade-in-left { animation: fadeInLeft 0.7s ease-out both; }
+.animate-fade-in-right { animation: fadeInRight 0.7s ease-out both; }
+.animate-scale-in { animation: scaleIn 0.5s ease-out both; }
+.animate-float { animation: float 4s ease-in-out infinite; }
+.animate-pulse-glow { animation: pulse-glow 2.5s ease-in-out infinite; }
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+.delay-600 { animation-delay: 0.6s; }
+
+/* Section Reveal (controlled by IntersectionObserver) */
+.section-hidden {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+.section-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ──────────────── Hero Carousel ──────────────── */
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.2s ease-in-out;
+}
+.hero-slide.active {
+  opacity: 1;
+}
+.hero-slide .hero-bg {
+  transition: transform 8s linear;
+}
+.hero-slide.active .hero-bg {
+  transform: scale(1.08);
+}
+
+/* ──────────────── Glassmorphism ──────────────── */
+.glass {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+.glass-dark {
+  background: rgba(10, 34, 64, 0.6);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* ──────────────── Navbar ──────────────── */
+.navbar-transparent {
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.navbar-solid {
+  background: rgba(10, 34, 64, 0.97);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0, 153, 216, 0.15);
+  box-shadow: 0 4px 30px rgba(10, 34, 64, 0.2);
+}
+
+/* ──────────────── Lightbox Modal ──────────────── */
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease-out;
+}
+.lightbox-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 85vh;
+  animation: scaleIn 0.4s ease-out;
+}
+.lightbox-content img {
+  max-width: 90vw;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xl);
+}
+.lightbox-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-fast);
+}
+.lightbox-btn:hover {
+  background: var(--blue);
+  border-color: var(--blue);
+  transform: translateY(-50%) scale(1.1);
+}
+.lightbox-btn.prev { left: -70px; }
+.lightbox-btn.next { right: -70px; }
+.lightbox-close {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-fast);
+  z-index: 10000;
+}
+.lightbox-close:hover {
+  background: #e74c3c;
+  border-color: #e74c3c;
+  transform: rotate(90deg) scale(1.1);
+}
+
+/* ──────────────── Interactive Grid Blocks ──────────────── */
+.grid-block {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  min-height: 280px;
+}
+.grid-block::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  transition: transform 0.6s ease;
+  z-index: 0;
+}
+.grid-block:hover::before {
+  transform: scale(1.08);
+}
+.grid-block-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  transition: var(--transition-base);
+}
+.grid-block:hover .grid-block-overlay {
+  background: rgba(0, 153, 216, 0.85) !important;
+}
+.grid-block-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  padding: 2rem;
+  color: white;
+}
+
+/* ──────────────── Service Cards ──────────────── */
+.service-card {
+  position: relative;
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 2.5rem 2rem;
+  border: 1px solid var(--border-light);
+  transition: var(--transition-base);
+  overflow: hidden;
+}
+.service-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--blue), var(--teal));
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+  border-color: transparent;
+}
+.service-card:hover::after {
+  transform: scaleX(1);
+}
+
+/* ──────────────── Gallery ──────────────── */
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  aspect-ratio: 4/3;
+}
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.gallery-item:hover img {
+  transform: scale(1.1);
+}
+.gallery-item-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10, 34, 64, 0.8), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  display: flex;
+  align-items: flex-end;
+  padding: 1.5rem;
+}
+.gallery-item:hover .gallery-item-overlay {
+  opacity: 1;
+}
+
+/* ──────────────── Contact Form ──────────────── */
+.form-input {
+  width: 100%;
+  padding: 14px 18px;
+  background: var(--bg-light);
+  border: 2px solid transparent;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  color: var(--text-primary);
+  transition: var(--transition-fast);
+  outline: none;
+  font-family: inherit;
+}
+.form-input:focus {
+  border-color: var(--blue);
+  background: white;
+  box-shadow: 0 0 0 4px rgba(0, 153, 216, 0.1);
+}
+.form-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* ──────────────── Stat Counter ──────────────── */
+.stat-item {
+  text-align: center;
+  padding: 1.5rem 2rem;
+  position: relative;
+}
+.stat-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 25%;
+  height: 50%;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ──────────────── Gradient Texts ──────────────── */
+.gradient-text {
+  background: linear-gradient(135deg, var(--blue), var(--teal));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ──────────────── Mobile Nav Drawer ──────────────── */
+.mobile-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 320px;
+  max-width: 85vw;
+  height: 100vh;
+  background: var(--navy);
+  z-index: 9998;
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.3);
+}
+.mobile-drawer.open {
+  transform: translateX(0);
+}
+.mobile-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9997;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.mobile-drawer-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ──────────────── Offer Cards ──────────────── */
+.offer-card {
+  background: white;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border-light);
+  transition: var(--transition-base);
+}
+.offer-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ──────────────── Section Divider ──────────────── */
+.section-divider {
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--blue), var(--teal));
+  border-radius: 100px;
+  margin-top: 1rem;
+}
+
+/* ──────────────── Responsive ──────────────── */
+@media (max-width: 768px) {
+  .lightbox-btn.prev { left: 8px; }
+  .lightbox-btn.next { right: 8px; }
+  .lightbox-btn { width: 40px; height: 40px; font-size: 18px; }
+  .lightbox-close { top: 12px; right: 12px; width: 40px; height: 40px; }
+
+  .stat-item:not(:last-child)::after {
+    display: none;
+  }
+
+  .grid-block {
+    min-height: 220px;
+  }
+}
