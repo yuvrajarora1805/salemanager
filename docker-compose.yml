@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        WEBSITE_URL: http://website:3000
     ports:
       - "3000:3000"
     environment:
@@ -17,6 +19,8 @@ services:
       - WEBSITE_URL=http://website:3000
     depends_on:
       - db
+    volumes:
+      - website_images:/app/website/public/images
     restart: always
 
   website:
@@ -32,6 +36,8 @@ services:
       - DB_NAME=goyalfilling
     depends_on:
       - db
+    volumes:
+      - website_images:/app/public/images
     restart: always
 
   db:
