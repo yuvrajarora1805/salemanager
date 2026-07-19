@@ -1,12 +1,14 @@
 import type { NextConfig } from "next";
 
+const websiteUrl = process.env.WEBSITE_URL || "http://localhost:3001";
+
 const nextConfig: NextConfig = {
   output: "standalone",
   async rewrites() {
     return [
       {
         source: '/images/:path*',
-        destination: 'http://localhost:3001/images/:path*' // Proxy images from website
+        destination: `${websiteUrl}/images/:path*`
       }
     ];
   }

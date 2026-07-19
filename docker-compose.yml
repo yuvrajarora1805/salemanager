@@ -14,6 +14,7 @@ services:
       - DB_USER=root
       - DB_PASSWORD=my-secret-pw
       - DB_NAME=goyalfilling
+      - WEBSITE_URL=http://website:3000
     depends_on:
       - db
     restart: always
