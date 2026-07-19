@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS gallery_images (
     id INT AUTO_INCREMENT PRIMARY KEY,
     image_url VARCHAR(500) NOT NULL,
     caption VARCHAR(255) DEFAULT '',
-    category ENUM('Station', 'Team', 'Events', 'Services') DEFAULT 'Station',
+    category VARCHAR(50) DEFAULT 'Station',
     display_order INT DEFAULT 0,
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
