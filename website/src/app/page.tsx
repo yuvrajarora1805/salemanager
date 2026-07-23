@@ -855,7 +855,7 @@ export default function Home() {
             <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 h-[400px]">
               <iframe
                 title="Google Maps"
-                src="https://maps.google.com/maps?q=30.714601,74.406801&hl=en&z=15&output=embed"
+                src="https://maps.google.com/maps?q=Goyal+Filling+Station,+Guddardhandi+Road,+Guru+Har+Sahai&hl=en&z=15&output=embed"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
@@ -973,11 +973,11 @@ export default function Home() {
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="text-[#0099D8]">✉️</span>
-                  <span>info@goyalfilling.in</span>
+                  <span>info@goyalfilling.com</span>
                 </li>
                 <li className="flex items-center gap-3 text-[#0099D8] font-semibold">
                   <span>🕒</span>
-                  <span>Open Daily: 6:00 AM — 9:00 PM</span>
+                  <span>Open Daily: 6:00 AM — 11:00 PM</span>
                 </li>
               </ul>
             </div>
