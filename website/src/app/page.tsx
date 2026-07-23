@@ -973,7 +973,7 @@ export default function Home() {
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="text-[#0099D8]">✉️</span>
-                  <span>info@goyalfilling.com</span>
+                  <span>info@goyalfilling.in</span>
                 </li>
                 <li className="flex items-center gap-3 text-[#0099D8] font-semibold">
                   <span>🕒</span>
@@ -1021,9 +1021,9 @@ export default function Home() {
               Energy. All rights reserved.
             </p>
             <div className="flex gap-6">
-              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-              <a href="#" className="hover:text-white transition-colors">Disclaimer</a>
+              <a href="/privacy" className="hover:text-white transition-colors">Privacy Policy</a>
+              <a href="/terms" className="hover:text-white transition-colors">Terms of Service</a>
+              <a href="/disclaimer" className="hover:text-white transition-colors">Disclaimer</a>
             </div>
           </div>
         </div>
