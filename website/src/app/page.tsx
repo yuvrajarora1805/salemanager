@@ -855,7 +855,7 @@ export default function Home() {
             <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 h-[400px]">
               <iframe
                 title="Google Maps"
-                src="https://maps.google.com/maps?q=Goyal+Filling+Station,+Guddardhandi+Road,+Guru+Har+Sahai&hl=en&z=15&output=embed"
+                src="https://maps.google.com/maps?q=loc:30.714601,74.406801&hl=en&z=15&output=embed"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
