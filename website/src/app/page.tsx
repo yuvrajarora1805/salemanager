@@ -129,8 +129,6 @@ export default function Home() {
   const [galleryFilter, setGalleryFilter] = useState("All");
   const [galleryImages, setGalleryImages] = useState(fallbackGalleryImages);
   const [offers, setOffers] = useState<any[]>([]);
-  const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
-  const [formSubmitted, setFormSubmitted] = useState(false);
 
   const heroTimerRef = useRef<NodeJS.Timeout | null>(null);
   const sectionRefs = useRef<(HTMLElement | null)[]>([]);
@@ -241,14 +239,6 @@ export default function Home() {
     return () => { document.body.style.overflow = ""; };
   }, [isMobileMenuOpen]);
 
-  /* ─── Form handling ─── */
-  const handleFormSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormSubmitted(true);
-    setTimeout(() => setFormSubmitted(false), 4000);
-    setFormData({ name: "", email: "", phone: "", message: "" });
-  };
-
   const addSectionRef = (index: number) => (el: HTMLElement | null) => {
     sectionRefs.current[index] = el;
   };
@@ -269,7 +259,7 @@ export default function Home() {
           <div className="flex items-center gap-4">
             <div className="bg-white rounded-lg p-1.5 shadow-sm">
               <Image
-                src="https://commons.wikimedia.org/wiki/Special:FilePath/Logo_Nayara_Energy.jpg"
+                src="/images/nayara_logo.jpg"
                 alt="Nayara Energy Logo"
                 width={100}
                 height={35}
@@ -325,7 +315,7 @@ export default function Home() {
           <div className="flex justify-between items-center mb-10">
             <div className="bg-white rounded-lg p-1.5">
               <Image
-                src="https://commons.wikimedia.org/wiki/Special:FilePath/Logo_Nayara_Energy.jpg"
+                src="/images/nayara_logo.jpg"
                 alt="Nayara Energy Logo"
                 width={90}
                 height={30}
@@ -709,74 +699,7 @@ export default function Home() {
         </div>
       )}
 
-      {/* ────────────────── 4-BLOCK INTERACTIVE GRID ────────────────── */}
-      <section
-        className="py-24 md:py-32 px-6 bg-[#F5F7FA] section-hidden"
-        ref={addSectionRef(4)}
-      >
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-[#0099D8] font-bold tracking-wider text-sm uppercase">
-              Explore More
-            </span>
-            <h2 className="text-3xl md:text-5xl font-extrabold text-[#0A2240] mt-3 mb-4">
-              Discover What Makes Us Different
-            </h2>
-            <div className="section-divider mx-auto" />
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {[
-              {
-                title: "Nayara Energy Partnership",
-                desc: "Backed by India's second-largest private refinery with a 20 MMTPA capacity at Vadinar, Gujarat.",
-                gradient: "from-[#0A2240] to-[#0F2D52]",
-                icon: "🏭",
-              },
-              {
-                title: "Community Impact",
-                desc: "We actively contribute to local development through employment, partnerships, and social initiatives.",
-                gradient: "from-[#0099D8] to-[#007AB0]",
-                icon: "🤝",
-              },
-              {
-                title: "Sustainability Focus",
-                desc: "Committed to environmental responsibility with eco-friendly practices and green station initiatives.",
-                gradient: "from-[#00B4A0] to-[#0099D8]",
-                icon: "🌱",
-              },
-              {
-                title: "Latest News & Updates",
-                desc: "Stay updated with our latest offers, price changes, new services, and community events.",
-                gradient: "from-[#F47B20] to-[#E8590C]",
-                icon: "📰",
-              },
-            ].map((block, i) => (
-              <div
-                key={i}
-                className={`grid-block bg-gradient-to-br ${block.gradient} rounded-2xl group`}
-              >
-                <div className="grid-block-overlay bg-black/10 rounded-2xl" />
-                <div className="grid-block-content p-8 md:p-10">
-                  <span className="text-4xl mb-4 block">{block.icon}</span>
-                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
-                    {block.title}
-                  </h3>
-                  <p className="text-white/75 text-base leading-relaxed max-w-md">
-                    {block.desc}
-                  </p>
-                  <div className="mt-6 flex items-center gap-2 text-white/90 font-semibold text-sm group-hover:gap-4 transition-all">
-                    Learn More
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ────────────────── OFFERS ────────────────── */}
       <section
@@ -856,60 +779,9 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-10">
-            {/* Contact Form */}
-            <div className="lg:col-span-3 bg-white rounded-2xl p-8 md:p-10 shadow-lg border border-gray-100">
-              <h3 className="text-2xl font-bold text-[#0A2240] mb-6">Send Us a Message</h3>
-              {formSubmitted && (
-                <div className="mb-6 bg-[#00B4A0]/10 border border-[#00B4A0]/30 text-[#00B4A0] rounded-xl p-4 font-semibold animate-fade-in-down">
-                  ✓ Thank you! Your message has been sent successfully.
-                </div>
-              )}
-              <form onSubmit={handleFormSubmit} className="space-y-5">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  <input
-                    type="text"
-                    placeholder="Your Name *"
-                    required
-                    className="form-input"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  />
-                  <input
-                    type="email"
-                    placeholder="Email Address *"
-                    required
-                    className="form-input"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  />
-                </div>
-                <input
-                  type="tel"
-                  placeholder="Phone Number"
-                  className="form-input"
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                />
-                <textarea
-                  placeholder="Your Message *"
-                  required
-                  rows={5}
-                  className="form-input resize-none"
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                />
-                <button
-                  type="submit"
-                  className="w-full bg-[#0099D8] text-white font-bold py-4 rounded-lg hover:bg-[#007AB0] transition-all duration-300 shadow-lg shadow-[#0099D8]/25 hover:shadow-xl hover:shadow-[#0099D8]/35"
-                >
-                  Send Message
-                </button>
-              </form>
-            </div>
-
+          <div className="flex flex-col gap-10">
             {/* Contact Info */}
-            <div className="lg:col-span-2 flex flex-col gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {/* Info Cards */}
               {[
                 {
@@ -920,7 +792,7 @@ export default function Home() {
                     </svg>
                   ),
                   label: "Address",
-                  value: "Main Highway Road, City\nState, India — 123456",
+                  value: "Guddardhandi Road, Ferozepur\nGuru Har Sahai, Punjab 152022",
                 },
                 {
                   icon: (
@@ -929,7 +801,7 @@ export default function Home() {
                     </svg>
                   ),
                   label: "Phone",
-                  value: "+91 98765 43210",
+                  value: "098148 30869",
                 },
                 {
                   icon: (
@@ -965,19 +837,20 @@ export default function Home() {
                   </div>
                 </div>
               ))}
+            </div>
 
-              {/* Map Placeholder */}
-              <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 flex-1 min-h-[180px]">
-                <div className="w-full h-full bg-gray-100 flex items-center justify-center p-8">
-                  <div className="text-center">
-                    <svg className="w-12 h-12 text-[#8E90A6] mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z" />
-                    </svg>
-                    <p className="text-[#8E90A6] text-sm font-medium">Google Maps Integration</p>
-                    <p className="text-[#8E90A6] text-xs mt-1">Embed your location map here</p>
-                  </div>
-                </div>
-              </div>
+            {/* Google Map */}
+            <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 h-[400px]">
+              <iframe
+                title="Google Maps"
+                src="https://maps.google.com/maps?q=30.714601,74.406801&hl=en&z=15&output=embed"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
             </div>
           </div>
         </div>
@@ -1011,7 +884,7 @@ export default function Home() {
               <div className="flex items-center gap-3 mb-6">
                 <div className="bg-white rounded-lg p-1.5">
                   <Image
-                    src="https://commons.wikimedia.org/wiki/Special:FilePath/Logo_Nayara_Energy.jpg"
+                    src="/images/nayara_logo.jpg"
                     alt="Nayara Energy Logo"
                     width={90}
                     height={30}
@@ -1025,26 +898,26 @@ export default function Home() {
               </p>
               {/* Social Icons */}
               <div className="flex gap-3">
-                {["facebook", "instagram", "twitter"].map((social) => (
+                {[
+                  { name: "facebook", url: "https://www.facebook.com/EssarGoyal" },
+                  { name: "instagram", url: "https://www.instagram.com/goyal_fillingstation_ghs" }
+                ].map((social) => (
                   <a
-                    key={social}
-                    href="#"
+                    key={social.name}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center text-white/60 hover:bg-[#0099D8] hover:text-white transition-all duration-300"
-                    aria-label={social}
+                    aria-label={social.name}
                   >
-                    {social === "facebook" && (
+                    {social.name === "facebook" && (
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                       </svg>
                     )}
-                    {social === "instagram" && (
+                    {social.name === "instagram" && (
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" />
-                      </svg>
-                    )}
-                    {social === "twitter" && (
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                       </svg>
                     )}
                   </a>
@@ -1078,11 +951,11 @@ export default function Home() {
               <ul className="space-y-4 text-sm text-gray-400">
                 <li className="flex items-start gap-3">
                   <span className="text-[#0099D8] mt-0.5">📍</span>
-                  <span>Main Highway Road, City<br />State, India — 123456</span>
+                  <span>Guddardhandi Road, Ferozepur<br />Guru Har Sahai, Punjab 152022</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="text-[#0099D8]">📞</span>
-                  <span>+91 98765 43210</span>
+                  <span>098148 30869</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="text-[#0099D8]">✉️</span>
