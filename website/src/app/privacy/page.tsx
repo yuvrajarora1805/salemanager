@@ -42,7 +42,7 @@ export default function PrivacyPolicy() {
           <p>
             If you have any questions or concerns about this Privacy Policy or how we handle your data, please contact us at:
           </p>
-          <p className="font-semibold text-[#0099D8]">info@goyalfilling.in</p>
+          <p className="font-semibold text-[#0099D8]">info@goyalfillingstation.in</p>
         </div>
       </div>
     </div>

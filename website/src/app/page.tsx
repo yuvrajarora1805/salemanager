@@ -822,7 +822,7 @@ export default function Home() {
                     </svg>
                   ),
                   label: "Working Hours",
-                  value: "Open Daily: 6:00 AM — 11:00 PM",
+                  value: "Open Daily: 6:00 AM — 9:00 PM",
                 },
                 {
                   icon: (
@@ -831,7 +831,7 @@ export default function Home() {
                     </svg>
                   ),
                   label: "Email",
-                  value: "info@goyalfilling.com",
+                  value: "info@goyalfillingstation.in",
                 },
               ].map((info, i) => (
                 <div
@@ -973,11 +973,11 @@ export default function Home() {
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="text-[#0099D8]">✉️</span>
-                  <span>info@goyalfilling.in</span>
+                  <span>info@goyalfillingstation.in</span>
                 </li>
                 <li className="flex items-center gap-3 text-[#0099D8] font-semibold">
                   <span>🕒</span>
-                  <span>Open Daily: 6:00 AM — 11:00 PM</span>
+                  <span>Open Daily: 6:00 AM — 9:00 PM</span>
                 </li>
               </ul>
             </div>
