@@ -21,6 +21,7 @@ services:
       - db
     volumes:
       - ./website/public/images:/app/website/public/images
+      - ./website/public/images:/app/public/images
     restart: always
 
   website:
