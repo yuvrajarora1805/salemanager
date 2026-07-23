@@ -963,7 +963,9 @@ export default function Home() {
               <ul className="space-y-4 text-sm text-gray-400">
                 <li className="flex items-start gap-3">
                   <span className="text-[#0099D8] mt-0.5">📍</span>
-                  <span>Guddardhandi Road, Ferozepur<br />Guru Har Sahai, Punjab 152022</span>
+                  <a href="https://maps.app.goo.gl/YFNd3aFtWUAdTLZQ8" target="_blank" rel="noopener noreferrer" className="hover:text-[#0099D8] transition-colors cursor-pointer">
+                    Guddardhandi Road, Ferozepur<br />Guru Har Sahai, Punjab 152022
+                  </a>
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="text-[#0099D8]">📞</span>
@@ -971,11 +973,11 @@ export default function Home() {
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="text-[#0099D8]">✉️</span>
-                  <span>info@goyalfilling.com</span>
+                  <span>info@goyalfilling.in</span>
                 </li>
                 <li className="flex items-center gap-3 text-[#0099D8] font-semibold">
                   <span>🕒</span>
-                  <span>Open Daily: 6 AM — 11 PM</span>
+                  <span>Open Daily: 6:00 AM — 9:00 PM</span>
                 </li>
               </ul>
             </div>
